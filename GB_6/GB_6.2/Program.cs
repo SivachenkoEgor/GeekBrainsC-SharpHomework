@@ -15,17 +15,16 @@ namespace GB_6._2
         
         static void Main(string[] args)
         {
-            MinClass minInstance = new();
-            double[] arr;
-            Console.WriteLine(minInstance.FuncMin(1, -100, 100, 0.5, out arr));
-            foreach (double value in arr) 
-            {
-                Console.WriteLine(value);
-            }
-
+            Exercise_Shower();
 
         }
 
+        static void Exercise_Shower()
+        {
+            MinClass minInstance = new();
+            minInstance.RegisterHandler(ConsoleView.CallBackConsoleMin);
+            minInstance.FuncMin(1, -100, 100, 0.5, out double[] arr);
+        }
     }
 
 }

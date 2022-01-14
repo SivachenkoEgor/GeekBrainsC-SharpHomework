@@ -8,9 +8,14 @@ using System.IO;
 namespace GB_6._2
 {
     public delegate double FunctionsDelegate(double x);
-
+    public delegate void MinClassStateHandler(string message);
     class MinClass
     {
+        MinClassStateHandler stateHandler;
+        public void RegisterHandler(MinClassStateHandler stateHandler)
+        {
+            this.stateHandler += stateHandler;
+        }
         readonly FunctionsDelegate[] del = { 
             delegate(double x) {return x * x - 50 * x + 10; },
             delegate(double x) {return x*x + 25 * x +5; },
@@ -48,12 +53,8 @@ namespace GB_6._2
         }
 
 
-        /*    2. Модифицировать программу нахождения минимума функции так, чтобы можно было передавать функцию в виде делегата.
-а) Сделать меню с различными функциями и представить пользователю выбор,
-   для какой функции и на каком отрезке находить минимум.Использовать массив(или список) делегатов,
-   в котором хранятся различные функции.
-*/
 
+        // Задание А
         public double FuncMin(int choice, double from, double to, double step)
         {
             FunctionsDelegate currentFunction = choice switch
@@ -72,8 +73,10 @@ namespace GB_6._2
                 if (currentFunction(x) < min) min = currentFunction(x);
                 x +=step;
             }
+            stateHandler?.Invoke($"Минимум функции {min}");
             return min;
         }
+        // Задание Б
         public double FuncMin(int choice, double from, double to, double step, out double[] arr)
         {
             FunctionsDelegate currentFunction = choice switch
@@ -98,12 +101,16 @@ namespace GB_6._2
                 i++;
                 x += step;
             }
+            stateHandler?.Invoke($"Минимум функции: {min}");
+            StringBuilder sb = new();
+            foreach (double value in arr)
+            {
+                sb.Append($"{value,10:0.000}, ");
+            }
+            stateHandler?.Invoke($"Массив значений функции:\n{sb}");
             return min;
         }
 
-        /*
-                б) * Переделать функцию Load, чтобы она возвращала массив считанных значений.
-        Пусть она возвращает минимум через параметр(с использованием модификатора out).*/
 
 
     }
