@@ -6,4 +6,8 @@
     <RootNamespace>GB_6._2</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CallBackConsole\View.csproj" />
+  </ItemGroup>
+
 </Project>

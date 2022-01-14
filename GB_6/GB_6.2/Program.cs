@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using CallBackConsole;
 
 namespace GB_6._2
 {
@@ -22,7 +23,7 @@ namespace GB_6._2
         static void Exercise_Shower()
         {
             MinClass minInstance = new();
-            minInstance.RegisterHandler(ConsoleView.CallBackConsoleMin);
+            minInstance.RegisterHandler(ConsoleView.CallBackConsole);
             minInstance.FuncMin(1, -100, 100, 0.5, out double[] arr);
         }
     }
