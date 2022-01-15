@@ -2,22 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using CallBackConsole;
+using System.Threading;
+using System.Diagnostics;
 
 namespace GB_6._3
 {
-/*    3. Переделать программу Пример использования коллекций для решения следующих задач:
-а) Подсчитать количество студентов учащихся на 5 и 6 курсах;
-б) подсчитать сколько студентов в возрасте от 18 до 20 лет на каком курсе учатся(*частотный массив);
-    в) отсортировать список по возрасту студента;
+/*   
 г) * отсортировать список по курсу и возрасту студента;*/
     class Program
     {
-        static int MyDelegat(Student st1, Student st2)          // Создаем метод для сравнения для экземпляров
-        {
-
-            return String.Compare(st1.firstName, st2.firstName);          // Сравниваем две строки
-        }
-
         static void Main(string[] args)
         {
 
@@ -27,23 +20,47 @@ namespace GB_6._3
 
         static void Exercise_Shower()
         {
-            DateTime dt = DateTime.Now;
+            Stopwatch stopWatch = new();
+            stopWatch.Start();
+
+            // storage > list паттерн crud (паттерн репозиторий)
             List<Student> list = StudentGrabber.GetListFromFile("students_6.csv");
-            StudentsInfo info = new();
+            
+            ConsoleReporter reporter = new();
 
-            info.RegisterHandler(ConsoleView.CallBackConsole);
+            reporter.ShowStudentCount(list);
+            reporter.ShowBachelorsFromList(list);
+            reporter.ShowMastersFromList(list);
+            
+            reporter.Show5thAnd6thCourseStudents(list);
 
-            info.StudentCount(list);
-            info.GetBachelorsFromList(list);
-            info.GetMastersFromList(list);
+
+            reporter.ShowAllStudents(list);
+
 
 
             StudentsComparsion.SortByFirstName(list);
-            info.GetStudentsFirstNames(list);
+            reporter.ShowAllStudents(list);
+            StudentsComparsion.SortByAge(list);
+            reporter.ShowAllStudents(list);
+
+            foreach (var value in StudentsInfo.GetStudentsInAgeRange(list, 18, 20))
+            {
+                Console.WriteLine(value);
+            }
+
+            StudentsComparsion.SortByCourseAndAge(list);
+            reporter.ShowAllStudents(list);
 
 
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
 
-            Console.WriteLine(DateTime.Now - dt);
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds,
+                ts.Milliseconds);
+            Console.WriteLine("RunTime " + elapsedTime);
+            Console.WriteLine(String.Compare("дима", "вова"));
 
         }
 

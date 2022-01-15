@@ -8,17 +8,20 @@ namespace GB_6._3
 {
     class Student
     {
-        public string lastName;
         public string firstName;
+        public string lastName;
         public string university;
         public string faculty;
-        public int course;
+        
         public string department;
+        public int course;
+        public int age;
         public int group;
+        
+        
         public string city;
-        int age;
         // Создаем конструктор
-        public Student(string firstName, string lastName, string university, string faculty, string department, int course, int age, int group, string city)
+        public Student(string firstName, string lastName, string university, string faculty, string department, int course,  int group, int age, string city)
         {
             this.lastName = lastName;
             this.firstName = firstName;
